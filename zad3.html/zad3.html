@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formularz rejestracyjny</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Formularz rejestracyjny</h1>
+  <form id="registrationForm">
+    <div>
+      <label for="login">Login:</label>
+      <input type="text" id="login" name="login" minlength="3" required>
+      <span id="loginError" class="error"></span>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <span id="emailError" class="error"></span>
+    </div>
+    <div>
+      <label for="password">Hasło:</label>
+      <input type="password" id="password" name="password" required>
+      <span id="passwordError" class="error"></span>
+    </div>
+    <div>
+      <label for="confirmPassword">Powtórz hasło:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <span id="confirmPasswordError" class="error"></span>
+    </div>
+    <div>
+      <input type="checkbox" id="showAdditionalFields" name="showAdditionalFields">
+      <label for="showAdditionalFields">Pokaż dodatkowe pola</label>
+    </div>
+    <div id="additionalFields" style="display: none;">
+      <div>
+        <label for="phone">Telefon:</label>
+        <input type="text" id="phone" name="phone">
+        <span id="phoneError" class="error"></span>
+      </div>
+      <div>
+        <label for="birthdate">Data urodzenia:</label>
+        <input type="date" id="birthdate" name="birthdate">
+        <span id="birthdateError" class="error"></span>
+      </div>
+    </div>
+    <div>
+      <button type="submit">Zarejestruj się</button>
+    </div>
+  </form>
+
+  <script>
+    const registrationForm = document.getElementById('registrationForm');
+    const loginInput = document.getElementById('login');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const showAdditionalFieldsCheckbox = document.getElementById('showAdditionalFields');
+    const additionalFieldsContainer = document.getElementById('additionalFields');
+    const phoneInput = document.getElementById('phone');
+    const birthdateInput = document.getElementById('birthdate');
+
+    registrationForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      if (validateForm()) {
+        // Tutaj można umieścić kod do przetwarzania formularza, np. wysłanie danych na serwer
+        alert('Rejestracja udana!');
+      }
+    });
+
+    showAdditionalFieldsCheckbox.addEventListener('change', function() {
+      additionalFieldsContainer.style.display = showAdditionalFieldsCheckbox.checked ? 'block' : 'none';
+    });
+
+    function validateForm() {
+      let isValid = true;
+
+      // Walidacja pola login
+      const loginError = document.getElementById('loginError');
+      if (loginInput.value.length < 3) {
+        loginError.textContent = 'Login musi mieć przynajmniej 3 znaki';
+        isValid = false;
+      } else {
+        loginError.textContent = '';
+      }
+
+      // Walidacja pola email
+      const emailError = document.getElementById('emailError');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Prosta walidacja adresu email
+      if (!emailRegex.test(emailInput.value)) {
+        emailError.textContent = 'Wprowadź poprawny adres email';
+        isValid = false;
+      } else {
+        emailError.textContent = '';
+      }
+
+      // Walidacja pola hasło
+      const passwordError = document.getElementById('passwordError');
+      if (passwordInput.value.length < 8) {
+        passwordError.textContent = 'Hasło musi mieć przynajmniej 8 znaków';
+        isValid = false;
+      } else {
+        passwordError.textContent = '';
+      }
+
+      // Walidacja pola powtórz hasło
+      const confirmPasswordError = document.getElementById('confirmPasswordError');
+      if (confirmPasswordInput.value !== passwordInput.value) {
+        confirmPasswordError.textContent = 'Hasła nie są identyczne';
+        isValid = false;
+      } else {
+        confirmPasswordError.textContent = '';
+      }
+
+      // Walidacja dodatkowych pól (jeśli są widoczne)
+      if (showAdditionalFieldsCheckbox.checked) {
+        const phoneError = document.getElementById('phoneError');
+        if (phoneInput.value.length < 9) {
+          phoneError.textContent = 'Wprowadź poprawny numer telefonu';
+          isValid = false;
+        } else {
+          phoneError.textContent = '';
+        }
+
+        const birthdateError = document.getElementById('birthdateError');
+        if (!birthdateInput.value) {
+          birthdateError.textContent = 'Wprowadź datę urodzenia';
+          isValid = false;
+        } else {
+          birthdateError.textContent = '';
+        }
+      }
+
+      return isValid;
+    }
+  </script>
+</body>
+</html>

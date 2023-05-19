@@ -1,0 +1,6 @@
+"Polecenie 'git push' służy do przesyłania wprowadzonych zmian 
+w lokalnym repozytorium Git na zdalny serwer. Po dokonaniu 
+modyfikacji w lokalnym repozytorium, możemy skorzystać z tej 
+komendy, aby przekazać te zmiany do zdalnego repozytorium, 
+które może znajdować się na serwerze Git, na przykład na 
+platformach takich jak GitHub, GitLab lub Bitbucket."

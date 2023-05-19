@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Симуляція світлофора</title>
+  <style>
+    .traffic-light {
+      width: 100px;
+      height: 300px;
+      background-color: black;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .light {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="traffic-light">
+    <div class="light" id="red"></div>
+    <div class="light" id="yellow"></div>
+    <div class="light" id="green"></div>
+  </div>
+
+  <script>
+    const redLight = document.getElementById('red');
+    const yellowLight = document.getElementById('yellow');
+    const greenLight = document.getElementById('green');
+
+    function resetLights() {
+      redLight.style.backgroundColor = 'red';
+      yellowLight.style.backgroundColor = 'yellow';
+      greenLight.style.backgroundColor = 'green';
+    }
+
+    function changeColor(element) {
+      resetLights();
+      element.style.backgroundColor = 'gray';
+    }
+
+    redLight.addEventListener('click', function() {
+      changeColor(redLight);
+    });
+
+    yellowLight.addEventListener('click', function() {
+      changeColor(yellowLight);
+    });
+
+    greenLight.addEventListener('click', function() {
+      changeColor(greenLight);
+    });
+
+    setInterval(function() {
+      if (redLight.style.backgroundColor === 'gray') {
+        changeColor(yellowLight);
+      } else if (yellowLight.style.backgroundColor === 'gray') {
+        changeColor(greenLight);
+      } else if (greenLight.style.backgroundColor === 'gray') {
+        changeColor(redLight);
+      }
+    }, 2000);
+  </script>
+</body>
+</html>
